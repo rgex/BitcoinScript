@@ -49,6 +49,11 @@ class Interpreter
         }
     }
 
+    /**
+     * @param $n
+     * @return int
+     * @throws \Exception
+     */
     public function varIntStringToInt($n)
     {
         if (strlen($n) == 1) // 8 bits
@@ -65,6 +70,11 @@ class Interpreter
             throw new \Exception('number too big');
     }
 
+    /**
+     * @param integer $size
+     * @return int
+     * @throws \Exception
+     */
     public function pushSizeStringToInt($size)
     {
         if (strlen($size) < 5)
@@ -73,26 +83,42 @@ class Interpreter
             throw new \Exception('invalid size');
     }
 
+    /**
+     * @return array
+     */
     public function getOpCodes()
     {
         return $this->opCodes;
     }
 
+    /**
+     * @return array
+     */
     public function getrOpCodes()
     {
         return $this->rOpCodes;
     }
 
+    /**
+     * @param string $script (bin)
+     */
     public function setScript($script)
     {
         $this->script = $script;
     }
 
+    /**
+     * @param string $script (hexa)
+     */
     public function setHexScript($script)
     {
         $this->script = hex2bin($script);
     }
 
+    /**
+     * @param bool $verbose
+     * @throws \Exception
+     */
     public function evalScript($verbose = false)
     {
         $position = 0;
@@ -108,6 +134,11 @@ class Interpreter
         } while ($position);
     }
 
+    /**
+     * @param int $position
+     * @return int
+     * @throws \Exception
+     */
     public function executeOpCode($position = 0)
     {
         $bnZero = 0;
@@ -654,56 +685,94 @@ class Interpreter
         return $position + $jump;
     }
 
+    /**
+     * @return mixed
+     */
     public function popFromMainStack()
     {
         return array_pop($this->mainStack);
     }
 
+    /**
+     * @return mixed
+     */
     public function popFromAltStack()
     {
         return array_pop($this->altStack);
     }
 
+    /**
+     * @param integer $pos
+     */
     public function eraseFromMainStack($pos)
     {
         unset($this->mainStack[count($this->mainStack) + $pos - 1]);
     }
 
+    /**
+     * @param integer $pos
+     */
     public function eraseFromAltStack($pos)
     {
         unset($this->altStack[count($this->altStack) + $pos - 1]);
     }
 
+    /**
+     * @param $value
+     * @param integer $pos
+     */
     public function setOnMainStack($value, $pos)
     {
         $this->mainStack[count($this->mainStack) + $pos - 1] = $value;
     }
 
+    /**
+     * @param $value
+     * @param integer $pos
+     */
     public function setOnAltStack($value, $pos)
     {
         $this->altStack[count($this->altStack) + $pos - 1] = $value;
     }
 
+    /**
+     * @param $entry
+     */
     public function pushOnMainStack($entry)
     {
         array_push($this->mainStack, $entry);
     }
 
+    /**
+     * @param $entry
+     */
     public function pushOnAlStack($entry)
     {
         array_push($this->altStack, $entry);
     }
 
+    /**
+     * @param integer $pos
+     * @return mixed
+     */
     public function stacktop($pos)
     {
         return $this->mainStack[count($this->mainStack) + $pos - 1];
     }
 
+    /**
+     * @param $pos
+     * @return mixed
+     */
     public function altStacktop($pos)
     {
         return $this->altStack[count($this->altStack) + $pos - 1];
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     public function castToBool($value)
     {
         return (bool)$value;

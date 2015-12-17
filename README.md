@@ -8,15 +8,10 @@ Objectives
 
 Create a transaction should look somehow like this:
 ```php
-$transactionBuilder->addOutput($amountInSatoshi,
-                               $scriptBuilder->addData('HELLO') //TxOut script
-                                             ->addOpCode($OpCodes::OP_DUP)
-                                             ->addData('HELLO2')
-                                             ->addOpCode($OpCodes::OP_EQUAL)
-                                             ->getRawScript()
+$transactionBuilder->addTxInput($outputTransactionHash,
+                               $outputIndex
                                )
-                   ->addInput($outputTransactionHash,
-                              $outputIndex,
+                   ->addTxOutput($amountInSatoshi,
                               $scriptBuilder->addData('HELLO') //sig Script
                                             ->addOpCode($OpCodes::OP_DUP)
                                             ->addData('HELLO2')
@@ -24,6 +19,6 @@ $transactionBuilder->addOutput($amountInSatoshi,
                                             ->getRawScript()
                               )
                    )
-                   
+                   ->sign....
                    ->getRawTransaction();
 ```

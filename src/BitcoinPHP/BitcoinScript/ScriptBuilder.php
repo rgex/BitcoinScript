@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jan
- * Date: 11/6/15
- * Time: 4:40 PM
- */
 
 namespace BitcoinPHP\BitcoinScript;
 
